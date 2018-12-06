@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image='images/green1.jpg' data-background-color="rgba(255, 255, 255)" data-background-opacity="0.7">
+					<h1>DOM</h1>
+					<p style="text-align: right"><b>by Natalia Sirotko</b></p>
+				</section>
+				<section data-background-color="rgb(204, 255, 153, 0.7)">
+					<h3>Browser Page Life</h3>
+					<img src="images/steps.png" alt="browser-life">
+					<aside class="notes">The process of a web browser turning HTML, CSS, and JavaScript into a finished visual representation is quite complex and involves a good bit of magic. Here’s a simplified set of steps the browser goes through</aside>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<h2>The HTML DOM (Document Object Model)</h2>
+					<p>When a web page is loaded, the browser creates a Document Object Model of the page </p>
+					<aside class="notes">
+						<p>It represents the page so that programs can change the document structure, style, and content. </p>
+					</aside>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>What is the DOM?</h3>
+						<p>The Document Object Model (DOM) is a programming interface for HTML and XML documents.</p>
+						<aside class="notes">
+						<p>The DOM represents the document as nodes and objects. That way, programming languages can connect to the page.</p>
+						<p>A Web page is a document. This document can be either displayed in the browser window or as the HTML source. But it is the same document in both cases.</p>
+						</aside>
+					</section>
+					<section>
+						<p>The DOM represents a document with a logical tree. Each branch of the tree ends in a node, and each node contains objects.</p>
+						<img src="images/nodes.png" alt="dom-nodes">
+						<aside class="notes">The DOM is an object-oriented representation of the web page, which can be modified with a scripting language such as JavaScript.</aside>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<h4>Constructing the document object model</h4>
+					<ol>
+						<li class="fragment">Conversion</li>
+						<li class="fragment">Tokenizing</li>
+						<li class="fragment">Lexing</li>
+						<li class="fragment">DOM construction</li>
+					</ol>
+					<aside class="notes">
+						<p>Conversion - the browser reads the raw bytes of the HTML off the disk or network and translates them to individual based on specified encoding of the file.</p>
+						<p>Tokenizing - the browser converts strings of characters into distinct tokens - e.g \<html>, \<body> and other strings within the “angle brackets”. Each token has a special meaning and a set of rules.</p>
+						<p>Lexing - the emitted tokens are converted into “node objects” which define their properties and rules. There is a relationship between the notes.</p>
+						<p>DOM construction - The tokenizer emits start and end tokens, which tells us the relationship between the notes. The created objects are linked in a tree data structure that also captures the parent-child relationships defined in the original markup</p>
+					</aside>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)"><img src="images/dom.png" alt="dom"></section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>CSS Object Model (CSSOM)</h3>
+						<p>The parsing of the HTML document is what constructs the DOM. In parallel, there is an oft forgotten cousin, the CSSOM, which is constructed from the specified stylesheet rules and resources.</p>
+						<aside class="notes"><p>As with HTML, we need to convert the received CSS rules into something that the browser can understand and work with. Hence, we repeat the HTML process, but for CSS instead of HTML</p></aside>
+					</section>
+					<section>
+						<h4>CSSOM creation</h4>
+						<img src="images/schem.png" alt="cssom">
+						<aside class="notes"><p>The CSS bytes are converted into characters, then tokens, then nodes, and finally they are linked into a tree structure known as the "CSS Object Model" (CSSOM):</p></aside>
+					</section>
+					<section>
+						<h4>CSSOM tree</h4>
+						<img src="images/cssom.png" alt="cssom">
+						<aside class="notes">CSSOM tree creation</aside>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Render Tree</h3>
+						<p>The CSSOM and DOM trees are combined to create the “render tree”, at which point the browser has enough information to perform a layout and paint something to the screen.</p>
+						<p>The render tree will only capture visible content.</p>
+						<aside class="notes">About render tree</aside>
+					</section>
+					<section>
+						<img src="images/browser-life.png" alt="browser-life">
+					</section>
+					<section>
+						<h4>To construct a render tree, the browser does the following:</h4>
+						<ol>
+							<li class="fragment">Starting at the root of the DOM tree, traverse each visible node.</li>
+							<li class="fragment">For each visible node finds the appropriate matching CSSOM rules and apply them.</li>
+							<li class="fragment">Emit visible nodes with content and their computed styles.</li>
+						</ol>
+						<aside class="notes">Steps to construct a render tree</aside>
+					</section>
+					<section>
+						<h4>Render tree creation</h4>
+						<img src="images/render-tree.png" alt="render tree">
+						<aside class="notes">render tree creation, representing visible content</aside>
+					</section>
+				</section>
+				<section>
+					<img src="images/fun3.jpg" alt="potter">
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Layout</h3>
+						<p>When the renderer is created and added to the tree, it does not have a position and size. Calculating these values is called <b>layout</b> or <b>reflow</b>.</p>
+						<aside class="notes">The output of the layout process is a “box-model”. “Box-model” precisely captures the position and size of every element within the viewport.</aside>
+					</section>					
+					<section>
+						<img src="images/browsers1.jpg" alt="browsers">
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Paint</h3>
+						<p>The browser starts to fill pixel by pixel in the screen.</p>
+						<p>This step is known as <b>“painting”</b> or “rasterizing”.</p>
+						<aside class="notes">When we have the visible nodes (DOM), their computed styles (CSSOM) and geometry (Layout), we can pass this information to our final stage which will convert each node in the render tree to actual pixels on the screen.</aside>
+					</section>
+					<section>
+						<h4>Repaint</h4>
+						<p>Sometimes parts of the screen will need to be updated, either because of changes in geometric properties of a node or because of stylistic change, such as changing the background color. This screen update is called a <b>repaint</b>, or a <b>redraw</b>/restyle.</p>
+						<aside class="notes">Description of repaint</aside>						
+					</section>
+					<section>
+						<h5>Repaint</h5>
+						<img src="images/repaint.png" alt="repaint">
+					</section>
+				</section>
+				<section>
+					<section>
+						<img src="images/isdom.jpg" alt="is html dom?">
+					</section>
+					<section>
+						<img src="images/isdom1.jpg" alt="is html dom?">
+					</section>
+					<section>
+						<img src="images/isdom2.jpg" alt="is html dom?">
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h2>Conclusion</h2>
+						<p>So, here are the steps the browser goes through when loading a page:</p>
+					</section>
+					<section>
+						<ol>
+							<li class="fragment">Browser creates the DOM and CSSOM.</li>
+							<li class="fragment">Browser creates the render tree, where the DOM and styles from the CSSOM are taken into account (display: none elements are avoided).</li>
+							<li class="fragment">Browser computes the geometry of the layout and its elements based on the render tree.</li>
+							<li class="fragment">Browser paints pixel by pixel to create the visual representation we see on the screen.</li>
+						</ol>
+						<aside class="notes">Set of steps the browser goes through</aside>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Important Data Types</h3>
+					</section>
+					<section>
+						<h4>Data types</h4>
+						<ul>
+							<li class="fragment">Document</li>
+							<li class="fragment">Element</li>
+							<li class="fragment">NodeList</li>
+							<li class="fragment">Attribute</li>
+							<li class="fragment">NamedNodeMap</li>
+						</ul>
+						<aside class="notes">This reference tries to describe the various objects and types in simple terms. But there are a number of different data types being passed around the API that you should be aware of. For the sake of simplicity, syntax examples in this API reference typically refer to nodes as elements, to arrays of nodes as nodeLists (or simply elements), and to attribute nodes simply as attributes.</aside>
+					</section>
+				</section>
+				<section>
+					<img src="images/fun7.png" alt="fun pic">
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Node</h3>
+						<h5>Properties</h5>
+						<ul>
+							<li class="fragment">firstChild</li>
+							<li class="fragment">lastChild</li>
+							<li class="fragment">parentNode etc.</li>						
+						</ul>
+					</section>					
+					<section>
+						<p>The <b>Node.firstChild</b> read-only property returns the node's first child in the tree, or null if the node has no children.</p>
+					</section>
+					<section>
+				<pre><code>
+	<p id="para-01">
+  		<span>First span</span>
+	</p>
+	<script>
+  		var p01 = document.getElementById('para-01');
+  		console.log(p01.firstChild.nodeName);
+	</script>
+						</code></pre>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Node</h3>
+						<h5>Methods</h5>
+						<ul>
+							<li class="fragment">appendChild</li>
+							<li class="fragment">contans</li>
+							<li class="fragment">hasAttributes</li>
+							<li class="fragment">insertBefore etc.</li>
+						</ul>
+					</section>
+					<section>
+						<p>The <b>Node.appendChild()</b> method adds a node to the end of the list of children of a specified parent node. </p>
+						<pre><code>
+	// Create a new paragraph element, and append it to the end of the document body
+	var p = document.createElement("p");
+	document.body.appendChild(p);
+						</code></pre>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Element</h3>
+						<h5>Properties</h5>
+						<ul>
+							<li class="fragment">attributes</li>
+							<li class="fragment">innerHTML etc.</li>
+						</ul>
+					</section>
+					<section>
+						<p>The <b>Element.attributes</b> property returns a live collection of all attribute nodes registered to the specified node.</p>
+						<pre><code>
+	// Get the first p element in the document
+	var para = document.getElementsByTagName("p")[0];
+	var atts = para.attributes;
+						</code></pre>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Element</h3>
+						<h5>Methods</h5>
+						<ul>
+							<li class="fragment">getAttribute</li>
+							<li class="fragment">setAttribute</li>
+							<li class="fragment">matches</li>
+							<li class="fragment">remove etc.</li>
+						</ul>
+					</section>
+					<section>
+						<p><b>getAttribute()</b> returns the value of a specified attribute on the element.</p>
+						<pre><code>
+	let div1 = document.getElementById('div1');
+	let align = div1.getAttribute('align');
+
+	alert(align); // Shows the value of align for the element with id="div1"
+						</code></pre>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>element.classList</h3>
+						<h5>Methods</h5>
+						<ul>
+							<li class="fragment">contains</li>
+							<li class="fragment">add</li>
+							<li class="fragment">remove</li>
+							<li class="fragment">toggle</li>
+						</ul>
+						<aside class="notes">The Element.classList is a read-only property that returns a live DOMTokenList collection of the class attributes of the element.</aside>
+					</section>
+					<section>
+						<p><b>Toggle</b> the class value - i.e., if the class exists then remove it and return false, if not, then add it and return true.</p>
+					</section>
+					<section>
+						<pre><code>
+	const div = document.createElement('div');
+	div.className = 'foo';
+	// if visible is set remove it, otherwise add it
+	div.classList.toggle("visible");
+						</code></pre>
+					</section>
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">
+					<section>
+						<h3>Document</h3>
+						<h5>Interfaces</h5>
+						<ul>
+							<li class="fragment">document.getElementById('id');</li>
+							<li class="fragment">document.getElementsByClassName('class-name');</li>
+							<li class="fragment">document.querySelector('div');</li>
+							<li class="fragment">document.querySelectorAll('div');</li>
+						</ul>
+					</section>
+					<section>
+						<p>The Document method <b>getElementById()</b> returns an Element object representing the element whose id property matches the specified string.</p>
+					</section>
+					<section>
+						<pre><code>
+  <p id="para">Some text here</p>
+  <button onclick="changeColor('blue');">blue</button>
+  <button onclick="changeColor('red');">red</button>
+
+  <script>
+	  function changeColor(newColor) {
+  		  var elem = document.getElementById('para');
+ 		  elem.style.color = newColor;
+	  }
+  </script>
+						</code></pre>
+					</section>
+					<section>
+						<p>The Element method <b>querySelectorAll()</b> returns a static NodeList representing a list of the document's elements that match the specified group of selectors</p>
+					</section>
+					<section>
+						<pre><code>
+var container = document.querySelector("#test");
+var matches = container.querySelectorAll("div.highlighted > p");
+						</code></pre>
+						<aside class="notes">Here, we get a list of <p> elements whose immediate parent element is a div with the class "highlighted" and which are located inside a container whose ID is "test".</aside>
+					</section>
+				</section>
+				<section>
+					<img src="images/fun5.jpg" alt="revva_photo">
+				</section>
+				<section data-background-color="rgba(204, 255, 153, 0.7)">				
+					<h4>Useful links</h4>
+					<ul>
+					<li><a href="https://developer.mozilla.org/ru/docs/DOM/DOM_Reference">https://developer.mozilla.org/ru/docs/DOM/DOM_Reference</a></li>
+					<li><a href="https://support.google.com/google-ads/answer/7336282?hl=en&ref_topic=7327830">https://support.google.com/google-ads/answer/7336282?hl=en&ref_topic=7327830</a></li>
+					<li><a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model?hl=ru">https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model?hl=ru</a></li>
+					<a href="https://www.w3.org/TR/DOM-Level-1/introduction.html">https://www.w3.org/TR/DOM-Level-1/introduction.html</a>
+					<li><a href="https://kleopetrov.me/2016/02/07/critical-rendering-path/">https://kleopetrov.me/2016/02/07/critical-rendering-path/</a></li>
+					<li><a href="https://rebeccapercival.wordpress.com/2014/10/10/day-nine-javascript-document-object-model-dom/">https://rebeccapercival.wordpress.com/2014/10/10/day-nine-javascript-document-object-model-dom/</a></li>
+					</ul>
+				</section>
+				<section data-background-image="images/baloons.gif" alt="baloons">
+					<h3 style="color: black">Thanks for your attention and time!</h3>
+				</section>				
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
