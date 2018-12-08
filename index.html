@@ -50,7 +50,7 @@
 						</aside>
 					</section>
 					<section>
-						<p>The DOM represents a document with a logical tree. Each branch of the tree ends in a node, and each node contains objects.</p>
+						<p>The DOM represents a document with a logical tree.</p>
 						<img src="images/nodes.png" alt="dom-nodes">
 						<aside class="notes">The DOM is an object-oriented representation of the web page, which can be modified with a scripting language such as JavaScript.</aside>
 					</section>
@@ -74,7 +74,7 @@
 				<section data-background-color="rgba(204, 255, 153, 0.7)">
 					<section>
 						<h3>CSS Object Model (CSSOM)</h3>
-						<p>The parsing of the HTML document is what constructs the DOM. In parallel, there is an oft forgotten cousin, the CSSOM, which is constructed from the specified stylesheet rules and resources.</p>
+						<p>CSSOM is constructed from the specified stylesheet rules and resources.</p>
 						<aside class="notes"><p>As with HTML, we need to convert the received CSS rules into something that the browser can understand and work with. Hence, we repeat the HTML process, but for CSS instead of HTML</p></aside>
 					</section>
 					<section>
@@ -92,20 +92,10 @@
 					<section>
 						<h3>Render Tree</h3>
 						<p>The CSSOM and DOM trees are combined to create the “render tree”, at which point the browser has enough information to perform a layout and paint something to the screen.</p>
-						<p>The render tree will only capture visible content.</p>
 						<aside class="notes">About render tree</aside>
 					</section>
 					<section>
 						<img src="images/browser-life.png" alt="browser-life">
-					</section>
-					<section>
-						<h4>To construct a render tree, the browser does the following:</h4>
-						<ol>
-							<li class="fragment">Starting at the root of the DOM tree, traverse each visible node.</li>
-							<li class="fragment">For each visible node finds the appropriate matching CSSOM rules and apply them.</li>
-							<li class="fragment">Emit visible nodes with content and their computed styles.</li>
-						</ol>
-						<aside class="notes">Steps to construct a render tree</aside>
 					</section>
 					<section>
 						<h4>Render tree creation</h4>
@@ -119,23 +109,35 @@
 				<section data-background-color="rgba(204, 255, 153, 0.7)">
 					<section>
 						<h3>Layout</h3>
-						<p>When the renderer is created and added to the tree, it does not have a position and size. Calculating these values is called <b>layout</b> or <b>reflow</b>.</p>
+						<p>Calculating position and size is called <b>layout</b> or <b>reflow</b>.</p>
 						<aside class="notes">The output of the layout process is a “box-model”. “Box-model” precisely captures the position and size of every element within the viewport.</aside>
 					</section>					
 					<section>
-						<img src="images/browsers1.jpg" alt="browsers">
+					<table>
+						<tr>
+							<td class="fragment">layout</td>
+							<td class="fragment"><img src="images/google.png" alt="google"></td>
+							<td class="fragment"><img src="images/opera.png" alt="opera"></td>
+							<td class="fragment"><img src="images/safari.png" alt="safari"></td>
+							<td class="fragment"><img src="images/ei.png" alt="ei"></td>
+						</tr>
+						<tr>
+							<td class="fragment">reflow</td>
+							<td class="fragment"><img src="images/fox.png" alt="firefox"></td>
+						</tr>
+					</table>
 					</section>
 				</section>
 				<section data-background-color="rgba(204, 255, 153, 0.7)">
 					<section>
 						<h3>Paint</h3>
-						<p>The browser starts to fill pixel by pixel in the screen.</p>
+						<p>Then the browser starts to fill pixel by pixel in the screen.</p>
 						<p>This step is known as <b>“painting”</b> or “rasterizing”.</p>
 						<aside class="notes">When we have the visible nodes (DOM), their computed styles (CSSOM) and geometry (Layout), we can pass this information to our final stage which will convert each node in the render tree to actual pixels on the screen.</aside>
 					</section>
 					<section>
 						<h4>Repaint</h4>
-						<p>Sometimes parts of the screen will need to be updated, either because of changes in geometric properties of a node or because of stylistic change, such as changing the background color. This screen update is called a <b>repaint</b>, or a <b>redraw</b>/restyle.</p>
+						<p>Changes in geometric properties of a node or stylistic changes, such as changing the background color are called a <b>repaint</b>, or a <b>redraw</b>/restyle.</p>
 						<aside class="notes">Description of repaint</aside>						
 					</section>
 					<section>
@@ -189,29 +191,14 @@
 					<img src="images/fun7.png" alt="fun pic">
 				</section>
 				<section data-background-color="rgba(204, 255, 153, 0.7)">
-					<section>
-						<h3>Node</h3>
-						<h5>Properties</h5>
-						<ul>
-							<li class="fragment">firstChild</li>
-							<li class="fragment">lastChild</li>
-							<li class="fragment">parentNode etc.</li>						
-						</ul>
-					</section>					
-					<section>
-						<p>The <b>Node.firstChild</b> read-only property returns the node's first child in the tree, or null if the node has no children.</p>
-					</section>
-					<section>
-				<pre><code>
-	<p id="para-01">
-  		<span>First span</span>
-	</p>
-	<script>
-  		var p01 = document.getElementById('para-01');
-  		console.log(p01.firstChild.nodeName);
-	</script>
-						</code></pre>
-					</section>
+					<h3>Node</h3>
+					<h5>Properties</h5>
+					<ul>
+						<li class="fragment">firstChild</li>
+						<li class="fragment">lastChild</li>
+						<li class="fragment">nextSibling</li>
+						<li class="fragment">parentNode etc.</li>						
+					</ul>				
 				</section>
 				<section data-background-color="rgba(204, 255, 153, 0.7)">
 					<section>
@@ -225,10 +212,10 @@
 						</ul>
 					</section>
 					<section>
-						<p>The <b>Node.appendChild()</b> method adds a node to the end of the list of children of a specified parent node. </p>
+						<p><b>node.appendChild();</b></p>
 						<pre><code>
 	// Create a new paragraph element, and append it to the end of the document body
-	var p = document.createElement("p");
+	const p = document.createElement("p");
 	document.body.appendChild(p);
 						</code></pre>
 					</section>
@@ -243,11 +230,11 @@
 						</ul>
 					</section>
 					<section>
-						<p>The <b>Element.attributes</b> property returns a live collection of all attribute nodes registered to the specified node.</p>
+						<p><b>element.attributes;</b></p>
 						<pre><code>
-	// Get the first p element in the document
-	var para = document.getElementsByTagName("p")[0];
-	var atts = para.attributes;
+	// Get the first input element in the document
+	var inp = document.getElementsByTagName("input")[0];
+	var atts = inp.attributes; // Shows the value of input
 						</code></pre>
 					</section>
 				</section>
@@ -263,10 +250,10 @@
 						</ul>
 					</section>
 					<section>
-						<p><b>getAttribute()</b> returns the value of a specified attribute on the element.</p>
+						<p><b>element.getAttribute()</b></p>
 						<pre><code>
-	let div1 = document.getElementById('div1');
-	let align = div1.getAttribute('align');
+	var div1 = document.getElementById('div1');
+	var align = div1.getAttribute('align');
 
 	alert(align); // Shows the value of align for the element with id="div1"
 						</code></pre>
@@ -285,11 +272,9 @@
 						<aside class="notes">The Element.classList is a read-only property that returns a live DOMTokenList collection of the class attributes of the element.</aside>
 					</section>
 					<section>
-						<p><b>Toggle</b> the class value - i.e., if the class exists then remove it and return false, if not, then add it and return true.</p>
-					</section>
-					<section>
+						<p><b>element.classList.toggle();</b></p>
 						<pre><code>
-	const div = document.createElement('div');
+	var div = document.createElement('div');
 	div.className = 'foo';
 	// if visible is set remove it, otherwise add it
 	div.classList.toggle("visible");
@@ -308,9 +293,7 @@
 						</ul>
 					</section>
 					<section>
-						<p>The Document method <b>getElementById()</b> returns an Element object representing the element whose id property matches the specified string.</p>
-					</section>
-					<section>
+						<p><b>document.getElementById();</b></p>
 						<pre><code>
   <p id="para">Some text here</p>
   <button onclick="changeColor('blue');">blue</button>
@@ -325,9 +308,7 @@
 						</code></pre>
 					</section>
 					<section>
-						<p>The Element method <b>querySelectorAll()</b> returns a static NodeList representing a list of the document's elements that match the specified group of selectors</p>
-					</section>
-					<section>
+						<p><b>document.querySelectorAll();</b></p>
 						<pre><code>
 var container = document.querySelector("#test");
 var matches = container.querySelectorAll("div.highlighted > p");
